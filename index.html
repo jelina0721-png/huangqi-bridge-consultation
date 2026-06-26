@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>人类图咨询整理 | 粉桃色</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='oklch(0.86 0.142 84)'/%3E%3Cpath d='M15 21h34v22H15z' rx='8' fill='oklch(0.665 0.205 37)'/%3E%3Cpath d='M20 28h24v4H20zm0 9h17v4H20z' fill='oklch(1 0 0)'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: oklch(1 0 0);
+      --surface: oklch(0.982 0.009 22);
+      --surface-strong: oklch(0.955 0.034 23);
+      --ink: oklch(0.235 0.046 25);
+      --muted: oklch(0.415 0.043 25);
+      --primary: oklch(0.665 0.205 37);
+      --primary-deep: oklch(0.42 0.14 32);
+      --pink: oklch(0.805 0.112 8);
+      --pink-soft: oklch(0.94 0.048 12);
+      --yellow: oklch(0.86 0.142 84);
+      --yellow-soft: oklch(0.968 0.058 88);
+      --accent: oklch(0.61 0.184 350);
+      --accent-soft: oklch(0.945 0.053 350);
+      --line: oklch(0.83 0.034 26);
+      --white: oklch(1 0 0);
+      --shadow: oklch(0.31 0.07 28 / 0.12);
+      --radius-sm: 8px;
+      --radius: 14px;
+      --page: min(1120px, calc(100vw - 32px));
+      --reading: 68ch;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(112deg, var(--yellow-soft) 0 18%, transparent 18% 100%),
+        linear-gradient(22deg, transparent 0 58%, var(--pink-soft) 58% 78%, transparent 78% 100%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+      line-height: 1.78;
+      text-rendering: optimizeLegibility;
+      transition: background-color 260ms var(--ease), color 260ms var(--ease);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent 0 10%, oklch(0.82 0.09 12 / 0.18) 10% 10.45%, transparent 10.45% 33%, oklch(0.9 0.12 84 / 0.18) 33% 33.45%, transparent 33.45% 100%),
+        linear-gradient(0deg, transparent 0 28%, oklch(0.92 0.08 45 / 0.16) 28% 28.4%, transparent 28.4% 100%);
+      opacity: .7;
+      mix-blend-mode: multiply;
+      z-index: -1;
+    }
+
+    a {
+      color: var(--primary-deep);
+      text-decoration-thickness: .08em;
+      text-underline-offset: .18em;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--progress, 0%);
+      height: 4px;
+      background: var(--primary);
+      z-index: 5;
+      transition: width 120ms linear;
+    }
+
+    .copy-button:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+    .page {
+      width: var(--page);
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+      align-items: center;
+      gap: clamp(28px, 5vw, 72px);
+      padding: clamp(42px, 8vw, 92px) 0 clamp(28px, 5vw, 64px);
+    }
+
+    .hero-copy {
+      max-width: 760px;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--yellow-soft);
+      color: var(--primary-deep);
+      font-size: .95rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .label::before {
+      content: "";
+      width: 18px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.18;
+      text-wrap: balance;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin-top: 22px;
+      max-width: 11ch;
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-size: clamp(3rem, 8vw, 5.8rem);
+      font-weight: 800;
+      color: var(--primary-deep);
+    }
+
+    h2 {
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      color: var(--primary-deep);
+      margin-bottom: 22px;
+    }
+
+    h3 {
+      font-size: clamp(1.18rem, 2vw, 1.45rem);
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .lead {
+      max-width: 58ch;
+      margin: 24px 0 0;
+      font-size: clamp(1.06rem, 2vw, 1.28rem);
+      color: var(--muted);
+      text-wrap: pretty;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: var(--pink-soft);
+      color: var(--primary-deep);
+      font-size: .95rem;
+      font-weight: 700;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(140deg, var(--pink-soft), transparent 46%),
+        linear-gradient(320deg, var(--yellow-soft), transparent 44%);
+      opacity: .9;
+    }
+
+    .visual-map {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: auto;
+      isolation: isolate;
+    }
+
+    .section {
+      padding: clamp(56px, 9vw, 104px) 0;
+    }
+
+    .section.intro {
+      padding-top: 24px;
+    }
+
+    .section-band {
+      background: linear-gradient(90deg, var(--surface-strong), var(--surface));
+    }
+
+    .reading {
+      max-width: var(--reading);
+      font-size: 1.04rem;
+    }
+
+    .reading p {
+      margin: 0 0 1.05em;
+      text-wrap: pretty;
+    }
+
+    .summary-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, .72fr);
+      gap: clamp(24px, 5vw, 56px);
+      align-items: start;
+    }
+
+    .quote-panel {
+      padding: clamp(22px, 4vw, 34px);
+      border-radius: var(--radius);
+      background: var(--primary-deep);
+      color: var(--white);
+    }
+
+    .quote-panel p {
+      margin: 0;
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-size: clamp(1.35rem, 2.5vw, 2.1rem);
+      line-height: 1.35;
+      text-wrap: balance;
+    }
+
+    .quote-panel span {
+      display: block;
+      margin-top: 18px;
+      color: oklch(0.92 0.03 68);
+      font-size: .98rem;
+      line-height: 1.65;
+    }
+
+    .point-list {
+      display: grid;
+      gap: 12px;
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .point-list li {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--primary-deep);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .92rem;
+      line-height: 1;
+    }
+
+    .advice-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .advice-item {
+      display: grid;
+      grid-template-columns: minmax(42px, 72px) minmax(0, 1fr);
+      gap: clamp(16px, 4vw, 34px);
+      padding: clamp(20px, 4vw, 34px);
+      border-radius: var(--radius);
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .advice-item:nth-child(3n + 1) {
+      background: linear-gradient(100deg, var(--white), var(--pink-soft));
+    }
+
+    .advice-item:nth-child(3n + 2) {
+      background: linear-gradient(100deg, var(--white), var(--yellow-soft));
+    }
+
+    .advice-no {
+      width: clamp(42px, 7vw, 64px);
+      height: clamp(42px, 7vw, 64px);
+      border-radius: 999px;
+      background: var(--primary-deep);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .advice-item p,
+    .analysis-item p {
+      margin: 0;
+      color: var(--muted);
+      text-wrap: pretty;
+    }
+
+    .advice-item .translation {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      background: oklch(1 0 0 / .7);
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    .action-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .action-card {
+      padding: 20px;
+      border-radius: var(--radius);
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .action-card label {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 750;
+      line-height: 1.55;
+    }
+
+    .action-card input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+    }
+
+    .action-card p {
+      margin: 10px 0 0 32px;
+      color: var(--muted);
+      font-size: .96rem;
+    }
+
+    .self-intro {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 18px;
+      border-radius: var(--radius);
+      background: var(--primary-deep);
+      color: var(--white);
+    }
+
+    .self-intro p {
+      margin: 0;
+      font-weight: 700;
+      line-height: 1.65;
+    }
+
+    .copy-button {
+      border: 0;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--primary-deep);
+      min-height: 42px;
+      padding: 9px 15px;
+      cursor: pointer;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .analysis-item {
+      padding: 22px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    @media (max-width: 820px) {
+      .hero,
+      .summary-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      h1 {
+        max-width: 8.5ch;
+      }
+
+      .advice-item {
+        grid-template-columns: 1fr;
+      }
+
+      .self-intro {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --page: min(100vw - 22px, 1120px);
+      }
+
+      body {
+        line-height: 1.72;
+      }
+
+      h1 {
+        font-size: clamp(2.55rem, 16vw, 4rem);
+      }
+
+      .pill {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+
+  <main>
+    <section class="page hero" id="top">
+      <div class="hero-copy">
+        <span class="label">人类图咨询整理</span>
+        <h1>把回应变成路</h1>
+        <p class="lead">这份页面把 49 分钟人类图咨询整理成一份可反复看的创作手账：它保留情绪被接住的部分，也把建议翻译成能真正执行的自媒体动作。</p>
+        <div class="hero-actions" aria-label="内容标签">
+          <span class="pill">弱关系机会</span>
+          <span class="pill">外部驱动</span>
+          <span class="pill">情绪权威</span>
+          <span class="pill">1v1 场域</span>
+        </div>
+      </div>
+
+      <div class="hero-card" aria-label="咨询建议地图">
+        <svg class="visual-map" viewBox="0 0 520 620" role="img" aria-labelledby="mapTitle mapDesc">
+          <title id="mapTitle">咨询建议地图</title>
+          <desc id="mapDesc">用粉色、珊瑚色和黄色整理等待回应、弱关系、外部驱动、情绪权威与行动清单之间的关系。</desc>
+          <rect x="22" y="24" width="476" height="572" rx="16" fill="oklch(1 0 0 / .78)"/>
+          <path d="M86 86 H434 V154 H86 Z" rx="12" fill="oklch(0.86 0.142 84)"/>
+          <text x="260" y="126" text-anchor="middle" font-size="31" font-weight="800" fill="oklch(0.42 0.14 32)">不是不行动</text>
+          <text x="260" y="184" text-anchor="middle" font-size="24" font-weight="800" fill="oklch(0.42 0.14 32)">是需要真实回应</text>
+          <path d="M260 214 C260 255 142 248 142 292" fill="none" stroke="oklch(0.665 0.205 37)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M260 214 C260 255 378 248 378 292" fill="none" stroke="oklch(0.805 0.112 8)" stroke-width="8" stroke-linecap="round"/>
+          <rect x="54" y="292" width="176" height="94" rx="14" fill="oklch(0.94 0.048 12)"/>
+          <text x="142" y="331" text-anchor="middle" font-size="24" font-weight="800" fill="oklch(0.37 0.13 352)">弱关系</text>
+          <text x="142" y="362" text-anchor="middle" font-size="17" fill="oklch(0.415 0.043 25)">多露脸，多碰撞</text>
+          <rect x="290" y="292" width="176" height="94" rx="14" fill="oklch(0.968 0.058 88)"/>
+          <text x="378" y="331" text-anchor="middle" font-size="24" font-weight="800" fill="oklch(0.42 0.14 32)">外部驱动</text>
+          <text x="378" y="362" text-anchor="middle" font-size="17" fill="oklch(0.415 0.043 25)">有人发起和追踪</text>
+          <path d="M142 404 C142 450 260 432 260 476" fill="none" stroke="oklch(0.61 0.184 350)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M378 404 C378 450 260 432 260 476" fill="none" stroke="oklch(0.69 0.18 43)" stroke-width="8" stroke-linecap="round"/>
+          <rect x="72" y="476" width="376" height="78" rx="14" fill="oklch(0.42 0.14 32)"/>
+          <text x="260" y="508" text-anchor="middle" font-size="23" font-weight="800" fill="oklch(1 0 0)">睡一觉，再决定</text>
+          <text x="260" y="538" text-anchor="middle" font-size="17" fill="oklch(0.96 0.06 88)">把上头和低谷都放过 48 小时</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="section intro section-band">
+      <div class="page summary-layout">
+        <div>
+          <h2>这次聊天讲了什么</h2>
+          <div class="reading">
+            <p>这是一场人类图咨询。咨询师先说，人类图更像一张「使用说明书」或「地图」，不能直接判断你当下状态，只能作为自我验证和行动实验的指引。</p>
+            <p>你最开始问的是：为什么很多机会都是别人主动邀请而来，自己感兴趣就会做得很好，但如果要自己主动推进，常常会懒、动力不足，并因此自责。</p>
+            <p>她把这个问题重新解释成：你不是缺行动力，而是你的启动方式更依赖外界场景、邀请、项目、话题和身体回应。</p>
+          </div>
+        </div>
+        <aside class="quote-panel">
+          <p>你不是没有能力，你是需要去更多机会会发生的地方。</p>
+          <span>这也是整场咨询最值得留下来的底层提醒：不是躺着等，而是主动进入会产生回应的场域。</span>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page section">
+      <h2>她给你的核心判断</h2>
+      <ul class="point-list">
+        <li><span class="mark">1</span><span>你是「生产者」：适合对外界机会、项目、邀请、想法做回应，不等于被动。</span></li>
+        <li><span class="mark">2</span><span>你的人生角色类似「3/5」：通过尝试、犯错、碰撞获得真实经验，再把经验变成解决方案。</span></li>
+        <li><span class="mark">3</span><span>你的机会更容易来自弱关系：陌生人、活动、合作场合、短暂认识的人。</span></li>
+        <li><span class="mark">4</span><span>你需要外部驱动：一个能帮你发起任务、拆计划、追进度、做复盘和补细节的人。</span></li>
+        <li><span class="mark">5</span><span>你要更大方地介绍自己是自媒体创作者，因为「觉得自己拿不出手」更多是你自己先把自己看低了。</span></li>
+        <li><span class="mark">6</span><span>你的决策方式是「情绪权威」：不要在情绪高点或低点做重大决定。</span></li>
+        <li><span class="mark">7</span><span>你的情绪起伏不是纯缺点，它也会带来感染力、表达力和镜头魅力。</span></li>
+        <li><span class="mark">8</span><span>你很适合 1v1 场域：多人场合不自在时，可以主动把关系转成单独聊天。</span></li>
+      </ul>
+    </section>
+
+    <section class="section section-band" id="advice">
+      <div class="page">
+        <h2>12 条建议，翻译成行动</h2>
+        <div class="advice-stack">
+          <article class="advice-item">
+            <span class="advice-no">01</span>
+            <div>
+              <h3>不要把「等待回应」理解成被动躺着</h3>
+              <p>她说等待回应不是完全不动，而是不要强迫自己当那个凭空发起一切的人。你适合先让外界出现一个项目、场景、邀请、话题或刺激，然后感受自己要不要回应。</p>
+              <p class="translation">对应自媒体：多去场域里出现，多和人互动，从真实触发点里挑你有反应的东西去做。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">02</span>
+            <div>
+              <h3>想让机会变多，就要多去弱关系场合露面</h3>
+              <p>她强调，你的机会大多来自弱关系，不是强关系。活动、旅行、合作、媒体团、行业局里的人，更容易突然想起你、邀请你。</p>
+              <p class="translation">对应动作：每月安排线下活动、博主局、品牌活动、旅行或酒店相关场合；不只是参加，还要让别人知道你是谁。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">03</span>
+            <div>
+              <h3>把「三分钟热度」改写成「试错型学习方式」</h3>
+              <p>你过去常批判自己三分钟热度、不够专精。她的解释是，你需要通过尝试、犯错、撞墙来获得真实经验。</p>
+              <p class="translation">对应内容：裸辞、马代、旅居、义工、带爸妈旅行，这些不是履历缺陷，而是你的真实实验库。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">04</span>
+            <div>
+              <h3>找一个能「指挥你」的人，但不是随便找</h3>
+              <p>她认可你需要一个能给方向、任务和进度压力的人，但这个人必须让你信任，不能只是形式上的管理。</p>
+              <p class="translation">更适合的配置：编导/运营型外脑、数据复盘外包、每周听你讲计划的朋友或同行。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">05</span>
+            <div>
+              <h3>计划不要闷在脑子里，要讲给两个以上的人</h3>
+              <p>她给了很具体的建议：心里有计划或想法时，分两次告诉两个以上的人。不是立 flag，而是说「这是一个初步想法，我想跟你讨论一下」。</p>
+              <p class="translation">对应动作：栏目、旅行计划、报价调整，都可以先找两个人聊一轮。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">06</span>
+            <div>
+              <h3>复盘可以外包，但你自己必须有检查意识</h3>
+              <p>你讨厌数据复盘，她说复盘和追踪可以让别人做，但你本人必须保留意识。你容易快、果断、solo，也容易漏细节和收尾糊涂。</p>
+              <p class="translation">对应动作：发内容后让别人整理数据，但你每周至少看一次结论；合作前加 checklist。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">07</span>
+            <div>
+              <h3>练习大方介绍自己，不要把 4 万粉说得像亏欠</h3>
+              <p>你说「才 4 万粉也好意思说自己是博主」。她认为这是你自己制定了过高标准，并且先在心里贬低了自己。</p>
+              <p class="translation">可用介绍：我现在主要做小红书内容创作，方向是旅行、旅居、带父母旅行和个人成长，目前 4 万多粉。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">08</span>
+            <div>
+              <h3>练习提出请求：关注、点赞、介绍资源</h3>
+              <p>现场，你把小红书账号发给她、让她关注、给广告笔记点赞。目的不是占便宜，而是训练你敢把需求说出口。</p>
+              <p class="translation">对应动作：对新认识的人说可以关注一下我；对认可你的人说有合作资源可以想到我。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">09</span>
+            <div>
+              <h3>接受夸奖时，把「没有没有」换成「好的好的 / 谢谢」</h3>
+              <p>她提醒你，语言是有力量的。你总说没有没有，身体和大脑也会接收这种否定。</p>
+              <p class="translation">对应动作：别人夸你时，先说谢谢。进阶一点可以说：谢谢，我也觉得这是我做得不错的一点。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">10</span>
+            <div>
+              <h3>情绪权威：不要在上头或低谷时做决定</h3>
+              <p>这是她说的最重要收获之一。你适合依靠情绪周期做决定，但不是在情绪最高或最低的时候拍板。</p>
+              <p class="translation">小事至少睡一觉；大事比如课程、合作、搬家、长期项目，等 48 到 72 小时。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">11</span>
+            <div>
+              <h3>情绪起伏不是纯问题，而是表达燃料</h3>
+              <p>她没有否定你的痛苦，但把你的情绪波动解释成「大艺术家」的通道。它会折腾你，也可能是感染力和创作力来源。</p>
+              <p class="translation">关键不是消灭情绪，而是不要在情绪浪尖上承诺、花钱或开大项目。</p>
+            </div>
+          </article>
+
+          <article class="advice-item">
+            <span class="advice-no">12</span>
+            <div>
+              <h3>把公开社交转成 1v1，你会更强</h3>
+              <p>你反馈说一对一时更敢表达自己，多人场合会有羞耻感。她建议你在活动里主动创造一对一连接。</p>
+              <p class="translation">对应动作：找想认识的人单独聊、坐近一点、多用「我想听听你怎么看」打开互动。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="page section" id="actions">
+      <h2>马上能做的 5 件事</h2>
+      <div class="reading">
+        <p>这 5 件事是从咨询建议里抽出来的最小行动。它们不要求你突然变得高度自律，只是帮你进入更容易产生回应的状态。</p>
+      </div>
+      <div class="action-board">
+        <div class="action-card">
+          <label><input type="checkbox" data-action="weak-tie">本周约 2 个弱关系对象聊天</label>
+          <p>博主、品牌方、活动认识的人、旅行或酒店相关朋友都可以。</p>
+        </div>
+        <div class="action-card">
+          <label><input type="checkbox" data-action="intro">准备一句固定自我介绍</label>
+          <p>让别人清楚知道你在做什么，而不是只记得你的名字。</p>
+        </div>
+        <div class="action-card">
+          <label><input type="checkbox" data-action="two-people">把一个计划讲给 2 个人听</label>
+          <p>用「初步想法，不确定做不做，想听你反馈」开头。</p>
+        </div>
+        <div class="action-card">
+          <label><input type="checkbox" data-action="operator">找一个外部追踪者</label>
+          <p>先不招团队也可以，每周过一次选题和进度。</p>
+        </div>
+        <div class="action-card">
+          <label><input type="checkbox" data-action="48h">建立 48 小时决策规则</label>
+          <p>课程、合作、旅行大额支出、设备、长期项目都先过夜。</p>
+        </div>
+      </div>
+
+      <div class="self-intro">
+        <p id="introText">我现在主要做小红书内容创作，方向是旅行、旅居、带父母旅行和个人成长，目前 4 万多粉。</p>
+        <button class="copy-button" type="button" data-copy="#introText">复制自我介绍</button>
+      </div>
+    </section>
+
+    <section class="section section-band" id="analysis">
+      <div class="page">
+        <h2>我对这些建议的分析</h2>
+        <div class="analysis-grid">
+          <article class="analysis-item">
+            <h3>她在帮你重写自责</h3>
+            <p>她把「我是不是太懒了」改写成「我需要更适配自己的启动方式」。你不是没有行动力，而是需要外部触发、他人发起、真实场景和身体回应。</p>
+          </article>
+          <article class="analysis-item">
+            <h3>她抓到了增长关键</h3>
+            <p>你的机会不是来自闭门规划，而是来自出去被看见。你的故事、能量、人设，都需要在弱关系网络里流动。</p>
+          </article>
+          <article class="analysis-item">
+            <h3>她给了一个现实系统</h3>
+            <p>「找领导」不是回去找老板，而是找编导、运营、项目经理型外脑。对素材多、情绪多、方向多的人，外部结构比单纯逼自己自律有效。</p>
+          </article>
+          <article class="analysis-item">
+            <h3>她一直在处理羞耻感</h3>
+            <p>不好意思介绍自己、不好意思麻烦别人、不好意思说 4 万粉、不好意思要关注和点赞。她的训练方向是让你习惯：我可以被看见，也可以提出请求。</p>
+          </article>
+          <article class="analysis-item">
+            <h3>她给了决策刹车</h3>
+            <p>凡是上头、恐惧、焦虑、怕错过的时候，不要马上花钱、承诺、签约或开大项目。先睡一觉，大事等两三天。</p>
+          </article>
+          <article class="analysis-item">
+            <h3>最关键的一句话</h3>
+            <p>你要从「我还不够好，所以不能拿出来」切换成「我正在成长，但我已经可以被看见」。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const progress = document.querySelector(".progress");
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? window.scrollY / max : 0;
+      progress.style.setProperty("--progress", `${Math.min(100, Math.max(0, ratio * 100))}%`);
+    }
+
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+
+    document.querySelectorAll("[data-action]").forEach((checkbox) => {
+      const key = `huangqi-action-${checkbox.dataset.action}`;
+      checkbox.checked = localStorage.getItem(key) === "true";
+      checkbox.addEventListener("change", () => localStorage.setItem(key, String(checkbox.checked)));
+    });
+
+    document.querySelector("[data-copy]").addEventListener("click", async (event) => {
+      const button = event.currentTarget;
+      const target = document.querySelector(button.dataset.copy);
+      const text = target.textContent.trim();
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "fixed";
+          textarea.style.inset = "0 auto auto 0";
+          textarea.style.opacity = "0";
+          document.body.append(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          textarea.remove();
+        }
+        button.textContent = "已复制";
+        window.setTimeout(() => {
+          button.textContent = "复制自我介绍";
+        }, 1500);
+      } catch {
+        button.textContent = "复制失败";
+      }
+    });
+  </script>
+</body>
+</html>
