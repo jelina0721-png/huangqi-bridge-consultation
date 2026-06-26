@@ -79,11 +79,13 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: var(--progress, 0%);
+      width: 100%;
       height: 4px;
+      transform: scaleX(var(--progress-scale, 0));
+      transform-origin: left center;
       background: var(--primary);
       z-index: 5;
-      transition: width 120ms linear;
+      transition: transform 120ms linear;
     }
 
     .copy-button:focus-visible {
@@ -480,116 +482,83 @@
       }
     }
   
-    .full-report {
-      padding: clamp(56px, 9vw, 104px) 0 clamp(70px, 9vw, 112px);
-      background: linear-gradient(90deg, oklch(1 0 0), var(--pink-soft));
+    .intro {
+      padding-bottom: clamp(64px, 9vw, 112px);
     }
 
-    .source-title {
-      max-width: var(--reading);
-      margin: 0 0 28px;
-      padding: 18px;
-      border-radius: var(--radius);
-      background: var(--primary-deep);
-      color: var(--white);
-      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
-      font-size: clamp(1.3rem, 2.6vw, 2rem);
-      font-weight: 800;
-      line-height: 1.35;
-      text-wrap: balance;
+    .intro .reading p:last-child {
+      margin-bottom: 0;
     }
 
-    .full-article {
-      max-width: var(--reading);
-      font-size: 1.055rem;
-    }
-
-    .full-article h2 {
-      margin: clamp(54px, 8vw, 86px) 0 24px;
-      padding-top: 18px;
-      border-top: 2px solid var(--primary);
-    }
-
-    .full-article h2:first-of-type {
-      margin-top: 0;
-    }
-
-    .full-article h3 {
-      margin: 34px 0 12px;
-      padding: 14px 16px;
-      border-radius: var(--radius);
-      background: linear-gradient(90deg, var(--pink-soft), var(--yellow-soft));
-      color: var(--primary-deep);
-      font-size: clamp(1.18rem, 2.4vw, 1.48rem);
-    }
-
-    .full-article p {
-      margin: 0 0 1.08em;
-      color: var(--ink);
-      text-wrap: pretty;
-    }
-
-    .full-article ol,
-    .full-article ul {
+    .core-points {
       display: grid;
-      gap: 10px;
-      margin: 18px 0 28px;
+      gap: 0;
+      margin: clamp(32px, 5vw, 58px) 0 0;
       padding: 0;
       list-style: none;
+      border-top: 1px solid var(--line);
     }
 
-    .full-article li {
-      position: relative;
-      padding: 13px 16px 13px 48px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      background: var(--white);
+    .core-points li {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: clamp(14px, 2vw, 24px);
+      align-items: start;
+      padding: clamp(16px, 2.6vw, 24px) 0;
+      border-bottom: 1px solid var(--line);
       color: var(--ink);
+      font-size: clamp(1rem, 1.45vw, 1.18rem);
+      line-height: 1.72;
       text-wrap: pretty;
     }
 
-    .full-article ol {
-      counter-reset: ordered;
-    }
-
-    .full-article ol li {
-      counter-increment: ordered;
-    }
-
-    .full-article ol li::before,
-    .full-article ul li::before {
-      position: absolute;
-      left: 13px;
-      top: 13px;
-      width: 24px;
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .core-mark {
+      width: 38px;
+      height: 38px;
       border-radius: 999px;
       background: var(--yellow);
       color: var(--primary-deep);
-      font-size: .78rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 900;
       line-height: 1;
     }
 
-    .full-article ol li::before {
-      content: counter(ordered);
+    .advice-stack {
+      gap: clamp(18px, 2.8vw, 30px);
     }
 
-    .full-article ul li::before {
-      content: "";
-      top: 19px;
-      left: 19px;
-      width: 11px;
-      height: 11px;
-      background: var(--primary);
+    .advice-item {
+      grid-template-columns: minmax(190px, .34fr) minmax(0, 1fr);
+      align-items: start;
+      gap: clamp(20px, 4vw, 48px);
+      padding: clamp(22px, 4vw, 40px);
     }
 
-    .cn-quote {
-      color: var(--primary-deep);
-      font-weight: 750;
+    .advice-head {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .advice-head h3 {
+      max-width: 13em;
+      margin: 0;
+      font-size: clamp(1.18rem, 2vw, 1.62rem);
+      line-height: 1.32;
+    }
+
+    .advice-no {
+      width: 42px;
+      height: 42px;
+      font-size: .9rem;
+    }
+
+    .advice-copy {
+      max-width: 74ch;
+      font-size: 1.02rem;
+      line-height: 1.75;
     }
 
     .advice-copy p {
@@ -611,6 +580,25 @@
       padding-left: 2px;
     }
 
+    .analysis-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: clamp(14px, 2vw, 20px);
+    }
+
+    .analysis-item {
+      grid-column: span 2;
+      padding: clamp(20px, 3vw, 28px);
+    }
+
+    .analysis-item:nth-child(-n + 2) {
+      grid-column: span 3;
+    }
+
+    .action-board {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: clamp(12px, 1.6vw, 18px);
+    }
+
     .module-intro {
       max-width: var(--reading);
       margin: 0 0 24px;
@@ -621,8 +609,8 @@
 
     .closing-grid {
       display: grid;
-      gap: 14px;
-      max-width: var(--reading);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(14px, 2vw, 20px);
     }
 
     .closing-card {
@@ -635,6 +623,47 @@
     .closing-card p {
       margin: 0;
       color: var(--ink);
+    }
+
+    .cn-quote {
+      color: var(--primary-deep);
+      font-weight: 750;
+    }
+
+    @media (max-width: 980px) {
+      .advice-item {
+        grid-template-columns: 1fr;
+      }
+
+      .advice-head h3,
+      .advice-copy {
+        max-width: none;
+      }
+
+      .analysis-grid,
+      .action-board,
+      .closing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .analysis-item,
+      .analysis-item:nth-child(-n + 2) {
+        grid-column: auto;
+      }
+    }
+
+    @media (min-width: 981px) and (max-width: 1180px) {
+      .action-board {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .action-card {
+        grid-column: span 2;
+      }
+
+      .action-card:nth-last-child(-n + 2) {
+        grid-column: span 3;
+      }
     }
 
   </style>
@@ -681,41 +710,57 @@
       </div>
     </section>
 
-    <section class="section intro section-band">
-      <div class="page summary-layout">
-        <div>
-          <h2>这次聊天讲了什么</h2>
-          <div class="reading">
-            <p>这是一场人类图咨询。咨询师先说，人类图更像一张「使用说明书」或「地图」，不能直接判断你当下状态，只能作为自我验证和行动实验的指引。</p>
-            <p>你最开始问的是：为什么很多机会都是别人主动邀请而来，自己感兴趣就会做得很好，但如果要自己主动推进，常常会懒、动力不足，并因此自责。</p>
-            <p>她把这个问题重新解释成：你不是缺行动力，而是你的启动方式更依赖外界场景、邀请、项目、话题和身体回应。</p>
-          </div>
-        </div>
-        <aside class="quote-panel">
-          <p>你不是没有能力，你是需要去更多机会会发生的地方。</p>
-          <span>这也是整场咨询最值得留下来的底层提醒：不是躺着等，而是主动进入会产生回应的场域。</span>
-        </aside>
-      </div>
-    </section>
 
-
-    <section class="full-report" id="full-report">
+    <section class="section intro section-band" id="summary">
       <div class="page">
-        <p class="source-title">人类图录音：聊天内容提取与咨询师建议分析</p>
-        <article class="full-article">
-          <h2 id="full-1-一-这次聊天主要聊了什么">一、这次聊天主要聊了什么</h2>
-<p>这是一场人类图咨询。咨询师先说明：人类图更像一张<span class="cn-quote">「使用说明书」</span>或<span class="cn-quote">「地图」</span>，不能直接判断你当下的状态，只能作为自我验证和行动实验的指引。</p>
+        <div class="summary-layout">
+          <div>
+            <h2>这次聊天讲了什么</h2>
+            <div class="reading">
+              <p>这是一场人类图咨询。咨询师先说明：人类图更像一张<span class="cn-quote">「使用说明书」</span>或<span class="cn-quote">「地图」</span>，不能直接判断你当下的状态，只能作为自我验证和行动实验的指引。</p>
 <p>你最开始问的是：为什么自己很多机会都是别人主动邀请而来，自己感兴趣就会做得很好，但如果要自己主动推进，常常会懒、动力不足，并因此自责。</p>
 <p>咨询师围绕你的人类图信息解释了几个重点：</p>
-<ol><li>你是<span class="cn-quote">「生产者」</span>：不是没有行动力，而是适合对外界的机会、项目、邀请、想法做回应。你并不缺行动力，问题常常在于有没有出现让身体和兴趣回应的对象。</li>
-<li>你的人生角色类似<span class="cn-quote">「3/5」</span>：三爻通过尝试、犯错、碰撞来学习；五爻容易被别人投射期待，也适合把自己撞出来的真实经验变成解决方案。</li>
-<li>你的机会更容易来自<span class="cn-quote">「弱关系」</span>：陌生人、活动、合作场合、短暂认识的人，比熟人圈和家人更容易给你带来机会。</li>
-<li>你需要一个外部驱动或<span class="cn-quote">「领导型」</span>角色：不是传统上司，而是一个能帮你发起任务、拆计划、追进度、做复盘和补细节的人。</li>
-<li>你要更大方地介绍自己是自媒体创作者：咨询师认为你现在的问题不是拿不出手，而是你自己先把自己看低了。</li>
-<li>你的内在权威是<span class="cn-quote">「情绪型权威」</span>：重大决定不要在情绪高点或低点做，至少睡一觉，大事最好等 48 到 72 小时。</li>
-<li>你的情绪起伏不是纯缺点：她用<span class="cn-quote">「大艺术家」</span>来形容你的情绪波动，认为它既会干扰你，也会带来感染力和表达魅力。因为你有 39-55 通道，所以你不仅是<span class="cn-quote">「大艺术家」</span>，也是 1V1 的强者。</li>
-<li>你很适合 1v1 场域：在公开场合如果羞耻或不自在，可以主动把关系转成一对一聊天，你在这种场域里更容易发挥魅力和连接力。</li></ol>
-        </article>
+            </div>
+          </div>
+          <aside class="quote-panel">
+            <p>你不是没有能力，你是需要去更多机会会发生的地方。</p>
+            <span>这也是整场咨询最值得留下来的底层提醒：不是躺着等，而是主动进入会产生回应的场域。</span>
+          </aside>
+        </div>
+        <ol class="core-points" aria-label="咨询师围绕你的人类图信息解释的重点">
+          <li>
+          <span class="core-mark">1</span>
+          <span>你是<span class="cn-quote">「生产者」</span>：不是没有行动力，而是适合对外界的机会、项目、邀请、想法做回应。你并不缺行动力，问题常常在于有没有出现让身体和兴趣回应的对象。</span>
+        </li>
+<li>
+          <span class="core-mark">2</span>
+          <span>你的人生角色类似<span class="cn-quote">「3/5」</span>：三爻通过尝试、犯错、碰撞来学习；五爻容易被别人投射期待，也适合把自己撞出来的真实经验变成解决方案。</span>
+        </li>
+<li>
+          <span class="core-mark">3</span>
+          <span>你的机会更容易来自<span class="cn-quote">「弱关系」</span>：陌生人、活动、合作场合、短暂认识的人，比熟人圈和家人更容易给你带来机会。</span>
+        </li>
+<li>
+          <span class="core-mark">4</span>
+          <span>你需要一个外部驱动或<span class="cn-quote">「领导型」</span>角色：不是传统上司，而是一个能帮你发起任务、拆计划、追进度、做复盘和补细节的人。</span>
+        </li>
+<li>
+          <span class="core-mark">5</span>
+          <span>你要更大方地介绍自己是自媒体创作者：咨询师认为你现在的问题不是拿不出手，而是你自己先把自己看低了。</span>
+        </li>
+<li>
+          <span class="core-mark">6</span>
+          <span>你的内在权威是<span class="cn-quote">「情绪型权威」</span>：重大决定不要在情绪高点或低点做，至少睡一觉，大事最好等 48 到 72 小时。</span>
+        </li>
+<li>
+          <span class="core-mark">7</span>
+          <span>你的情绪起伏不是纯缺点：她用<span class="cn-quote">「大艺术家」</span>来形容你的情绪波动，认为它既会干扰你，也会带来感染力和表达魅力。因为你有 39-55 通道，所以你不仅是<span class="cn-quote">「大艺术家」</span>，也是 1V1 的强者。</span>
+        </li>
+<li>
+          <span class="core-mark">8</span>
+          <span>你很适合 1v1 场域：在公开场合如果羞耻或不自在，可以主动把关系转成一对一聊天，你在这种场域里更容易发挥魅力和连接力。</span>
+        </li>
+        </ol>
       </div>
     </section>
 
@@ -724,54 +769,55 @@
         <h2>二、咨询师给你的核心建议</h2>
         <div class="advice-stack">
           <article class="advice-item">
-            <span class="advice-no">01</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">01</span>
               <h3>不要把<span class="cn-quote">「等待回应」</span>理解成被动躺着</h3>
-              <div class="advice-copy"><p>她说等待回应不是完全不动，而是不要强迫自己当那个凭空发起一切的人。你适合先让外界出现一个项目、场景、邀请、话题或刺激，然后你去感受自己要不要回应。</p>
+            </div>
+            <div class="advice-copy"><p>她说等待回应不是完全不动，而是不要强迫自己当那个凭空发起一切的人。你适合先让外界出现一个项目、场景、邀请、话题或刺激，然后你去感受自己要不要回应。</p>
 <p>翻译成自媒体行动：</p>
 <p>你不一定要每天凭空逼自己想一个新大项目。更适合你的方式是：多去场域里出现，多和人互动，多让外界给你触发点，再从触发点里挑你真正有反应的东西去做。</p></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">02</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">02</span>
               <h3>想让机会变多，就要多去弱关系场合露面</h3>
-              <div class="advice-copy"><p>你问能不能让邀约频率更高。她的答案很明确：可以，但方式不是闷在家里等，而是多在不同场合露脸，和陌生人、半熟人、合作对象产生碰撞。</p>
+            </div>
+            <div class="advice-copy"><p>你问能不能让邀约频率更高。她的答案很明确：可以，但方式不是闷在家里等，而是多在不同场合露脸，和陌生人、半熟人、合作对象产生碰撞。</p>
 <p>她强调：你的机会大多来自弱关系，不是强关系。也就是说，可能不是父母、闺蜜、熟人长期推荐你，而是你在活动、旅行、合作、媒体团、行业局里被别人看见，然后对方突然想起你、邀请你。</p>
 <p>对应动作：</p>
 <ul><li>每月安排固定的线下活动、博主局、品牌活动、旅行/酒店相关场合。</li>
 <li>不只是去参加，而是主动让别人知道你是谁、你在做什么。</li>
 <li>保持和弱关系的轻连接，不要只等别人想起你。</li></ul></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">03</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">03</span>
               <h3>把<span class="cn-quote">「三分钟热度」</span>改写成<span class="cn-quote">「试错型学习方式」</span></h3>
-              <div class="advice-copy"><p>你说自己过去常批判自己三分钟热度、不够专精、没有长期坚持一件事。咨询师的解释是：你不是废，你是三爻型学习者，需要通过尝试、犯错、撞墙来获得真实经验。</p>
+            </div>
+            <div class="advice-copy"><p>你说自己过去常批判自己三分钟热度、不够专精、没有长期坚持一件事。咨询师的解释是：你不是废，你是三爻型学习者，需要通过尝试、犯错、撞墙来获得真实经验。</p>
 <p>她的核心意思是：你撞过的墙、换过的路、做过的试验，最后会变成你的底气。你不是靠别人告诉你<span class="cn-quote">「A+B=C」</span>就能相信的人，你要自己验证过，才会真的拥有这份经验。</p>
 <p>对应到内容：</p>
 <p>你过去裸辞、马代、旅居、义工、带爸妈旅行，这些看似不稳定的经历，不是履历缺陷，而是你内容里最有价值的<span class="cn-quote">「真实实验库」</span>。</p></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">04</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">04</span>
               <h3>找一个能<span class="cn-quote">「指挥你」</span>的人，但不是随便找</h3>
-              <div class="advice-copy"><p>你提到自己可能需要一个领导，告诉你这周该发什么、该做什么。咨询师认可这一点：你确实需要一个能给你方向、任务和进度压力的人。</p>
+            </div>
+            <div class="advice-copy"><p>你提到自己可能需要一个领导，告诉你这周该发什么、该做什么。咨询师认可这一点：你确实需要一个能给你方向、任务和进度压力的人。</p>
 <p>但她也补了一点：你并不是谁的话都会听。你需要信任对方的能力，也需要双向选择。</p>
 <p>更适合你的配置：</p>
 <ul><li>一个编导/运营型外脑，帮你定主题、拆栏目、追进度。</li>
 <li>一个数据复盘或投放/运营外包，帮你看点击率、互动、跳出、广告表现。</li>
 <li>一个你信任的朋友或同行，每周听你讲计划，帮你补盲点。</li></ul>
 <p>重点不是让别人替你做主，而是让外部的人替你发起、提醒、追踪和查漏补缺。</p></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">05</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">05</span>
               <h3>计划不要闷在脑子里，要讲给两个以上的人</h3>
-              <div class="advice-copy"><p>这是她讲得很具体的一条建议：如果你心里有计划或想法，分两次告诉两个以上的人。</p>
+            </div>
+            <div class="advice-copy"><p>这是她讲得很具体的一条建议：如果你心里有计划或想法，分两次告诉两个以上的人。</p>
 <p>她不是让你立 flag，而是让你这样表达：</p>
 <p><span class="cn-quote">「我现在有一个初步想法，还不确定做不做，想跟你讨论一下。」</span></p>
 <p>这样做的价值：</p>
@@ -780,60 +826,60 @@
 <li>对方可能提供你没有想到的资源。</li>
 <li>你会更容易判断这个计划到底想不想做。</li></ul>
 <p>这条其实很适合你的自媒体：每个栏目、旅行计划、商业报价调整，都可以先找两个人聊一轮，而不是一个人脑内拉扯。</p></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">06</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">06</span>
               <h3>复盘可以外包，但你自己必须有<span class="cn-quote">「检查意识」</span></h3>
-              <div class="advice-copy"><p>你说你讨厌数据复盘，哪怕数据好也不想看。咨询师说，复盘和追踪可以让别人帮你做，但你本人必须保留意识。</p>
+            </div>
+            <div class="advice-copy"><p>你说你讨厌数据复盘，哪怕数据好也不想看。咨询师说，复盘和追踪可以让别人帮你做，但你本人必须保留意识。</p>
 <p>她给你的底层提醒是：你容易快、果断、solo，但也容易漏细节、收尾糊涂。所以你需要一个固定的检查动作。</p>
 <p>对应动作：</p>
 <ul><li>发内容后，可以让别人整理数据，但你每周至少看一次结论。</li>
 <li>拍摄/发广告/接合作前，加一个 checklist。</li>
 <li>让外包或运营帮你追踪，但你要知道自己在追踪什么。</li></ul></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">07</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">07</span>
               <h3>练习大方介绍自己，不要把 4 万粉说得像亏欠</h3>
-              <div class="advice-copy"><p>你说在普通社交场合不好意思说自己做自媒体，觉得<span class="cn-quote">「才 4 万粉也好意思说自己是博主」</span>。咨询师认为这是你自己制定了一个过高标准，并且先在心里贬低了自己。</p>
+            </div>
+            <div class="advice-copy"><p>你说在普通社交场合不好意思说自己做自媒体，觉得<span class="cn-quote">「才 4 万粉也好意思说自己是博主」</span>。咨询师认为这是你自己制定了一个过高标准，并且先在心里贬低了自己。</p>
 <p>她给出的核心提醒是：别人对你的态度，很大程度取决于你对自己的态度。如果你自己觉得拿不出手，别人也会接收到这种退缩；如果你自己站起来，别人会更容易尊重你。</p>
 <p>更合适的自我介绍可以是：</p>
 <p><span class="cn-quote">「我现在主要做小红书内容创作，方向是旅行、旅居、带父母旅行和个人成长，目前 4 万多粉。」</span></p>
 <p>不用夸张，也不用低头。</p></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">08</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">08</span>
               <h3>练习提出请求：关注、点赞、介绍资源</h3>
-              <div class="advice-copy"><p>现场你做了1个练习：把小红书账号发给她，让她关注，还让她给广告笔记点赞。这个练习的目的不是占便宜，而是训练你<span class="cn-quote">「敢把需求说出口」</span>。</p>
+            </div>
+            <div class="advice-copy"><p>现场你做了1个练习：把小红书账号发给她，让她关注，还让她给广告笔记点赞。这个练习的目的不是占便宜，而是训练你<span class="cn-quote">「敢把需求说出口」</span>。</p>
 <p>你过去可能会觉得麻烦别人、浪费别人时间、拿不出手。她的建议是：本周可以先练习<span class="cn-quote">「犯五个错误」</span>，也就是做五次让你有点不好意思但其实合理的小请求。</p>
 <p>可执行版本：</p>
 <ul><li>对新认识的人说：我做小红书，可以关注一下我。</li>
 <li>对认可你的人说：如果你身边有旅行/酒店/家庭内容相关合作，可以想到我。</li>
 <li>对朋友说：我最近在做一个爸爸再出发栏目，可以帮我看看这个选题有没有吸引力吗。</li></ul></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">09</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">09</span>
               <h3>接受夸奖时，把<span class="cn-quote">「没有没有」</span>换成<span class="cn-quote">「好的好的 / 谢谢」</span></h3>
-              <div class="advice-copy"><p>当咨询师夸你数据好、内容好，你下意识说<span class="cn-quote">「没有没有」</span>。她提醒你：语言是有力量的，你的大脑和身体会接收你说的话。</p>
+            </div>
+            <div class="advice-copy"><p>当咨询师夸你数据好、内容好，你下意识说<span class="cn-quote">「没有没有」</span>。她提醒你：语言是有力量的，你的大脑和身体会接收你说的话。</p>
 <p>她建议你先从最简单的话术开始改：</p>
 <ul><li>别人夸你：不要马上否定。</li>
 <li>可以先说：好的好的，谢谢。</li>
 <li>进阶一点可以说：谢谢，我也觉得这是我做得不错的一点。</li></ul>
 <p>这其实是在训练你承接认可的能力。</p></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">10</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">10</span>
               <h3>内在权威是情绪型权威：不要在上头或低谷时做决定</h3>
-              <div class="advice-copy"><p>这是她说<span class="cn-quote">「今天最重要的收获」</span>之一。准确地说，你的内在权威是情绪型权威。你适合依靠情绪周期做决定，但不是在情绪最高或最低的时候拍板。</p>
+            </div>
+            <div class="advice-copy"><p>这是她说<span class="cn-quote">「今天最重要的收获」</span>之一。准确地说，你的内在权威是情绪型权威。你适合依靠情绪周期做决定，但不是在情绪最高或最低的时候拍板。</p>
 <p>具体做法：</p>
 <ul><li>小事：至少睡一觉再决定。</li>
 <li>购物：先放购物车，第二天再看还想不想买。</li>
@@ -841,28 +887,27 @@
 <li>如果第二天情绪平静后仍然想要，那可以更相信它。</li>
 <li>如果第二天感受变淡、身体不想动，就不要急着推进。</li></ul>
 <p>她让你从购物这种小事开始练习，是为了让你慢慢识别：什么叫自己的情绪平静，什么叫身体真正愿意。</p></div>
-            </div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">11</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">11</span>
               <h3>情绪起伏不是纯问题，而是你的表达燃料</h3>
-              <div class="advice-copy"><p>你说自己一天里开心和低谷来回切换，会觉得痛苦。她没有否定这个痛苦，但把它解释为<span class="cn-quote">「大艺术家」</span>的情绪通道。</p>
-<p>这句话对你的意义是：情绪确实会折腾你，但它也可能是你的感染力、创作力和镜头表达力来源。关键不是消灭情绪，而是不要在情绪浪尖上做决定。</p></div>
             </div>
+            <div class="advice-copy"><p>你说自己一天里开心和低谷来回切换，会觉得痛苦。她没有否定这个痛苦，但把它解释为<span class="cn-quote">「大艺术家」</span>的情绪通道。</p>
+<p>这句话对你的意义是：情绪确实会折腾你，但它也可能是你的感染力、创作力和镜头表达力来源。关键不是消灭情绪，而是不要在情绪浪尖上做决定。</p></div>
           </article>
 <article class="advice-item">
-            <span class="advice-no">12</span>
-            <div>
+            <div class="advice-head">
+              <span class="advice-no">12</span>
               <h3>把公开社交转成 1v1，你会更强</h3>
-              <div class="advice-copy"><p>最后她提到你很适合 1v1 场域。你也反馈说，在一对一时更敢表达自己，多人场合讲自己会有羞耻感。</p>
+            </div>
+            <div class="advice-copy"><p>最后她提到你很适合 1v1 场域。你也反馈说，在一对一时更敢表达自己，多人场合讲自己会有羞耻感。</p>
 <p>她建议你下次去活动、会场、局里，不要硬逼自己在一群人面前输出，可以主动创造一对一：</p>
 <ul><li>找你想认识的人单独聊。</li>
 <li>在圆桌/会场里坐近一点，创造自然对话。</li>
 <li>多用<span class="cn-quote">「我想听听你怎么看」</span>打开互动。</li>
 <li>把公共场合拆成几个 1v1 连接。</li></ul>
 <p>她认为你进入 1v1 后会更有魅力、更容易让别人记住你。</p></div>
-            </div>
           </article>
         </div>
       </div>
@@ -941,7 +986,7 @@
     function updateProgress() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const ratio = max > 0 ? window.scrollY / max : 0;
-      progress.style.setProperty("--progress", `${Math.min(100, Math.max(0, ratio * 100))}%`);
+      progress.style.setProperty("--progress-scale", String(Math.min(1, Math.max(0, ratio))));
     }
 
     updateProgress();
